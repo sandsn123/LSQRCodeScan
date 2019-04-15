@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import LSQRCodeScanTool
 
 class CreatQRcodeViewController: UIViewController {
 

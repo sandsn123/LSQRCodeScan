@@ -54,6 +54,8 @@ private extension ScanDemoViewController {
             case .denied:    // 拒绝访问
                 let alertVC = UIAlertController(title: "访问失败", message: "当前设备不能访问", preferredStyle: .alert)
                 self.present(alertVC, animated: true, completion: nil)
+            @unknown default:
+                ()
             }
         }
     }

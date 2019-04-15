@@ -214,8 +214,9 @@ private extension QRCodeScanTool {
         case .denied, .restricted:
             delegate?.scanQRCodeFailed(error: .camaraAuthorityError)
         case .authorized:()
+        @unknown default:
+            delegate?.scanQRCodeFailed(error: .otherError)
         }
-        
     }
     /// 设置扫描作用范围(非相机可视范围)
     func setRectOfInterest(_ origalRect: CGRect) {

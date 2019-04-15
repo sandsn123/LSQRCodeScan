@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yTL-OH-c1O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yTL-OH-c1O">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -141,39 +141,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vrL-i1-Otj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1383" y="42"/>
-        </scene>
-        <!--扫描二维码-->
-        <scene sceneID="Fet-gM-6cw">
-            <objects>
-                <viewController title="扫描二维码" id="K23-hH-Kf5" userLabel="扫描二维码" customClass="ScanViewController" customModule="QRCodeScan" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="L91-dl-4Uf">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xcA-gF-biY">
-                                <rect key="frame" x="50" y="196" width="275" height="275"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="xcA-gF-biY" secondAttribute="height" multiplier="1:1" id="qe0-IE-ZrH"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="xcA-gF-biY" firstAttribute="leading" secondItem="Hgb-Cv-SOB" secondAttribute="leading" constant="50" id="0pU-Em-wH4"/>
-                            <constraint firstItem="xcA-gF-biY" firstAttribute="centerY" secondItem="L91-dl-4Uf" secondAttribute="centerY" id="HZZ-CR-an1"/>
-                            <constraint firstItem="Hgb-Cv-SOB" firstAttribute="trailing" secondItem="xcA-gF-biY" secondAttribute="trailing" constant="50" id="YH6-S6-zBy"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="Hgb-Cv-SOB"/>
-                    </view>
-                    <toolbarItems/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="scanView" destination="xcA-gF-biY" id="nFl-Sn-AEr"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jr3-cy-2Xm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1231" y="-1164"/>
         </scene>
         <!--扫描二维码-->
         <scene sceneID="t1u-vw-KOD">

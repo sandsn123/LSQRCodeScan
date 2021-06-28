@@ -13,6 +13,8 @@ protocol ScanViewDelegate: class {
     func scanViewTapAction(with point: CGPoint)
     func scanViewPinchAction(with pinch: UIPinchGestureRecognizer)
     func scanViewTapFailureMaskView(with tap: UIGestureRecognizer)
+    func scanViewTapOpenAlbum()
+    func scanViewTapBack()
 }
 
 class ScanView: UIView {
@@ -51,6 +53,9 @@ class ScanView: UIView {
     /// 边框线宽度， 默认0.2
     lazy var borderLineWidth: CGFloat = 0.2
     
+    /// 是否显示相册识别按钮
+    var isShowAlbumButton = true
+    
     /// 边角颜色， 默认红色
     var cornerColor: UIColor = .green {
         didSet {
@@ -76,7 +81,11 @@ class ScanView: UIView {
             scanBorderWidth = screenWidth * scanBorderWidthRadio
             scanBorderHeight = scanBorderWidth
             scanBorderX = 0.5 * (1 - scanBorderWidthRadio) * screenWidth
-            scanBorderY = 0.5 * (screenHeight - scanBorderWidth)
+            if isShowAlbumButton {
+                scanBorderY = 0.5 * (screenHeight - scanBorderWidth) - 50
+            } else {
+                scanBorderY = 0.5 * (screenHeight - scanBorderWidth)
+            }
         }
     }
     
@@ -109,6 +118,31 @@ class ScanView: UIView {
         }
         return contentView
     }()
+    
+    /// 相册
+    lazy var albumButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setImage(imageNamed("albumFlag"), for: .normal)
+        btn.addTarget(self, action: #selector(onTappedOpenAlbumButton), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        if !subviews.contains(btn) {
+            addSubview(btn)
+        }
+        return btn
+    }()
+    
+    /// 返回
+    lazy var backButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setImage(imageNamed("back"), for: .normal)
+        btn.addTarget(self, action: #selector(onTappedBackButton), for: .touchUpInside)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        if !subviews.contains(btn) {
+            addSubview(btn)
+        }
+        return btn
+    }()
+    
     /// 正常提示消息label
     private lazy var tipsLabel: UILabel = {
         let tipsLbl = UILabel.init()
@@ -186,7 +220,11 @@ class ScanView: UIView {
         self.scanBorderWidth = screenWidth * scanBorderWidthRadio
         self.scanBorderHeight = scanBorderWidth
         self.scanBorderX = 0.5 * (1 - scanBorderWidthRadio) * screenWidth
-        self.scanBorderY = 0.5 * (screenHeight - scanBorderWidth - topAreaHeight)
+        if isShowAlbumButton {
+            scanBorderY = 0.5 * (screenHeight - scanBorderWidth) - 50
+        } else {
+            scanBorderY = 0.5 * (screenHeight - scanBorderWidth)
+        }
         self.torchMode = .off
         self.isShowFlash = false
         super.init(frame: frame)
@@ -219,7 +257,9 @@ class ScanView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        setupBackButton()
         setupTips()
+        setupAlbumButton()
         setupFlashTipsLabel()
         setupFlashButton()
     }
@@ -264,65 +304,39 @@ extension ScanView {
         removeFailureView()
         delegate?.scanViewTapFailureMaskView(with: tap)
     }
+    
+    @objc func onTappedOpenAlbumButton() {
+        delegate?.scanViewTapOpenAlbum()
+    }
+    
+    @objc func onTappedBackButton() {
+        delegate?.scanViewTapBack()
+    }
 }
 
 private extension ScanView {
     func setupTips() {
-        if #available(iOS 9.0, *) {
-            NSLayoutConstraint.activate([tipsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),tipsLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 20),tipsLabel.widthAnchor.constraint(equalToConstant: frame.size.width),tipsLabel.heightAnchor.constraint(equalToConstant: 14)])
-        } else {
-            
-            let height = NSLayoutConstraint(item: tipsLabel, attribute: NSLayoutAttribute.height, relatedBy:NSLayoutRelation.equal, toItem:nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier:0.0, constant:14)
-            
-            let width = NSLayoutConstraint(item: tipsLabel, attribute: NSLayoutAttribute.width, relatedBy:NSLayoutRelation.equal, toItem:nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier:0.0, constant:frame.size.width)
-            
-            let topConstraint = NSLayoutConstraint(item: tipsLabel, attribute: NSLayoutAttribute.top, relatedBy:NSLayoutRelation.equal, toItem:contentView, attribute: NSLayoutAttribute.bottom, multiplier:0.0, constant:20)
-            
-            let cententXConstraint = NSLayoutConstraint(item: tipsLabel, attribute: NSLayoutAttribute.centerX, relatedBy:NSLayoutRelation.equal, toItem:contentView, attribute: NSLayoutAttribute.centerX, multiplier:0, constant:0)
-            
-            contentView.addConstraints([topConstraint, cententXConstraint])
-            tipsLabel.addConstraints([height,width])
-        }
+        NSLayoutConstraint.activate([tipsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),tipsLabel.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 20),tipsLabel.widthAnchor.constraint(equalToConstant: frame.size.width),tipsLabel.heightAnchor.constraint(equalToConstant: 14)])
     }
     
     func setupFlashTipsLabel() {
 
-        if #available(iOS 9.0, *) {
-            
-            NSLayoutConstraint.activate([flashTipLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),flashTipLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),flashTipLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor),flashTipLabel.heightAnchor.constraint(equalToConstant: 14)])
-        } else {
-            let height = NSLayoutConstraint(item: flashTipLabel, attribute: NSLayoutAttribute.height, relatedBy:NSLayoutRelation.equal, toItem:nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier:0, constant:14)
-            
-            let width = NSLayoutConstraint(item: flashTipLabel, attribute: NSLayoutAttribute.width, relatedBy:NSLayoutRelation.equal, toItem:contentView, attribute: NSLayoutAttribute.width, multiplier:0, constant:0)
-            
-            let bottomConstraint = NSLayoutConstraint(item: flashTipLabel, attribute: NSLayoutAttribute.bottom, relatedBy:NSLayoutRelation.equal, toItem:contentView, attribute: NSLayoutAttribute.bottom, multiplier:0, constant:-20)
-            
-            let cententXConstraint = NSLayoutConstraint(item: flashTipLabel, attribute: NSLayoutAttribute.centerX, relatedBy:NSLayoutRelation.equal, toItem:contentView, attribute: NSLayoutAttribute.centerX, multiplier:0, constant:0)
-            
-            contentView.addConstraints([width, bottomConstraint, cententXConstraint])
-            flashTipLabel.addConstraint(height)
-        }
+        NSLayoutConstraint.activate([flashTipLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),flashTipLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),flashTipLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor),flashTipLabel.heightAnchor.constraint(equalToConstant: 14)])
     }
     
     func setupFlashButton() {
-        if #available(iOS 9.0, *) {
-            NSLayoutConstraint.activate([flashButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                                         flashButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
-                                         flashButton.widthAnchor.constraint(equalToConstant: 32),
-                                         flashButton.heightAnchor.constraint(equalToConstant: 32)])
-        } else {
-            let height = NSLayoutConstraint(item: flashButton, attribute: NSLayoutAttribute.height, relatedBy:NSLayoutRelation.equal, toItem:nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier:0, constant:32)
-            
-            let width = NSLayoutConstraint(item: flashButton, attribute: NSLayoutAttribute.width, relatedBy:NSLayoutRelation.equal, toItem:nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier:0, constant:32)
-            
-            let bottomConstraint = NSLayoutConstraint(item: flashButton, attribute: NSLayoutAttribute.bottom, relatedBy:NSLayoutRelation.equal, toItem:contentView, attribute: NSLayoutAttribute.bottom, multiplier:0, constant:-40)
-            
-            let cententXConstraint = NSLayoutConstraint(item: flashButton, attribute: NSLayoutAttribute.centerX, relatedBy:NSLayoutRelation.equal, toItem:contentView, attribute: NSLayoutAttribute.centerX, multiplier:0, constant:0)
-            
-            contentView.addConstraints([bottomConstraint, cententXConstraint])
-            flashButton.addConstraints([height, width])
-        }
-        
+        NSLayoutConstraint.activate([flashButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+                                     flashButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
+                                     flashButton.widthAnchor.constraint(equalToConstant: 32),
+                                     flashButton.heightAnchor.constraint(equalToConstant: 32)])
+    }
+    
+    func setupAlbumButton() {
+        NSLayoutConstraint.activate([albumButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),albumButton.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 90)])
+    }
+    
+    func setupBackButton() {
+        NSLayoutConstraint.activate([backButton.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 16), backButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 32)])
     }
 }
 

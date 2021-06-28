@@ -38,7 +38,12 @@ class QRCodeScanViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -95,6 +100,18 @@ private extension QRCodeScanViewController {
 
 // MARK: QRCodeScanToolDelegate
 extension QRCodeScanViewController: QRCodeScanToolDelegate {
+    func scanQRCodeExit() {
+        guard let naviVc = self.navigationController else {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        naviVc.popViewController(animated: true)
+    }
+    
+    func scanQRCodeOpenAlbum() {
+        openAlbum()
+    }
+    
     public func scanQRCodeSuccess(result: [String]) {
         QRCodeScanKit.sharedInstance.delegate?.scanQrcodeSuccess(QRCodeScanKit.sharedInstance, from: self, result: result)
     }

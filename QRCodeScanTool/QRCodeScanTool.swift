@@ -20,6 +20,13 @@ protocol QRCodeScanToolDelegate: NSObjectProtocol {
     ///
     /// - Parameters: - error: 错误类型
     func scanQRCodeFailed(error: QRCodeScanError)
+    
+    
+    /// 打开相册
+    func scanQRCodeOpenAlbum()
+    
+    /// 打开相册
+    func scanQRCodeExit()
 }
 
 class QRCodeScanTool: NSObject {
@@ -555,6 +562,13 @@ extension QRCodeScanTool: AVCaptureVideoDataOutputSampleBufferDelegate{
 
 // MARK: - ScanViewDelegate
 extension QRCodeScanTool: ScanViewDelegate {
+    func scanViewTapBack() {
+        delegate?.scanQRCodeExit()
+    }
+    
+    func scanViewTapOpenAlbum() {
+        delegate?.scanQRCodeOpenAlbum()
+    }
     
     /// 手势调整焦距拉近拉远镜头
     func scanViewPinchAction(with pinch: UIPinchGestureRecognizer) {

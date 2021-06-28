@@ -86,7 +86,7 @@ private extension QRCodeScanViewController {
                 return
             }
             
-            let alertVC = UIAlertController(title: "QRCode.Album.NotAuth.Title".s_localize(fallback: "相册访问受限"), message: "QRCode.Album.NotAuth.Title".s_localize(fallback: "当前设备不能访问相册"), preferredStyle: .alert)
+            let alertVC = UIAlertController(title: "QRCode.Album.NotAuth.Title".s_localize(fallback: "相册访问受限"), message: "QRCode.Album.NotAuth.Message".s_localize(fallback: "当前设备不能访问相册"), preferredStyle: .alert)
             let cancle = UIAlertAction(title: "QRCode.Camera.NotAuth.Cancel".s_localize(fallback: "取消"), style: .cancel, handler: nil)
             let set = UIAlertAction(title: "QRCode.Camera.NotAuth.GoSet".s_localize(fallback: "去设置"), style: .default) { _ in
                 UIApplication.shared.openURL(settingUrl)

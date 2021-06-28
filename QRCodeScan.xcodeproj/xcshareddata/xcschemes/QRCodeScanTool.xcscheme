@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "326A3EFE226417140026B8E2"
-               BuildableName = "LSQRCodeScanTool.framework"
-               BlueprintName = "LSQRCodeScanTool"
+               BlueprintIdentifier = "3222E6722265650A005A447D"
+               BuildableName = "QRCodeScanTool.framework"
+               BlueprintName = "QRCodeScanTool"
                ReferencedContainer = "container:QRCodeScan.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "326A3EFE226417140026B8E2"
-            BuildableName = "LSQRCodeScanTool.framework"
-            BlueprintName = "LSQRCodeScanTool"
+            BlueprintIdentifier = "3222E6722265650A005A447D"
+            BuildableName = "QRCodeScanTool.framework"
+            BlueprintName = "QRCodeScanTool"
             ReferencedContainer = "container:QRCodeScan.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "326A3EFE226417140026B8E2"
-            BuildableName = "LSQRCodeScanTool.framework"
-            BlueprintName = "LSQRCodeScanTool"
+            BlueprintIdentifier = "3222E6722265650A005A447D"
+            BuildableName = "QRCodeScanTool.framework"
+            BlueprintName = "QRCodeScanTool"
             ReferencedContainer = "container:QRCodeScan.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

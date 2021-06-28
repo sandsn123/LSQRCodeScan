@@ -1,2 +1,3 @@
-# LSScanQRCodeDemo
-二维码扫描和生成
+# QRCodeScanTool
+
+二维码扫描demo

@@ -11,7 +11,7 @@ import Photos
 import RSKImageCropper
 
 class QRCodeScanViewController: UIViewController {
-    
+    private var isNeedReScanWhenAppear = true
     private lazy var photoLibraryVC: UIImagePickerController = {
         let libraryVC = UIImagePickerController()
         libraryVC.sourceType = .photoLibrary
@@ -33,12 +33,19 @@ class QRCodeScanViewController: UIViewController {
         QRCodeScanKit.sharedInstance.delegate?.scanStyleCustomConfigation(QRCodeScanKit.sharedInstance, from: self)
         
         self.navigationItem.title = QRCodeScanKit.sharedInstance.title
-        QRCodeScanTool.shared.startScanning()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        if isNeedReScanWhenAppear {
+            QRCodeScanTool.shared.startScanning()
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -48,6 +55,7 @@ class QRCodeScanViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         QRCodeScanTool.shared.stopScanning()
+        self.isNeedReScanWhenAppear = true
     }
     
 }
@@ -189,6 +197,7 @@ extension QRCodeScanViewController: RSKImageCropViewControllerDelegate {
                     } else {
                         controller.dismiss(animated: true, completion: nil)
                     }
+                    self.isNeedReScanWhenAppear = false
                     QRCodeScanKit.sharedInstance.delegate?.detecorQRCodeFailed(QRCodeScanKit.sharedInstance, from: self)
                     return
                 }
@@ -199,6 +208,7 @@ extension QRCodeScanViewController: RSKImageCropViewControllerDelegate {
                     } else {
                         controller.dismiss(animated: true, completion: nil)
                     }
+                    self.isNeedReScanWhenAppear = false
                     QRCodeScanKit.sharedInstance.delegate?.detecorQRCodeFailed(QRCodeScanKit.sharedInstance, from: self)
                     return
                 }
@@ -213,6 +223,7 @@ extension QRCodeScanViewController: RSKImageCropViewControllerDelegate {
                     } else {
                         controller.dismiss(animated: true, completion: nil)
                     }
+                    self.isNeedReScanWhenAppear = false
                     QRCodeScanKit.sharedInstance.delegate?.detecorQRCodeFailed(QRCodeScanKit.sharedInstance, from: self)
                     return
                 }
@@ -224,6 +235,7 @@ extension QRCodeScanViewController: RSKImageCropViewControllerDelegate {
                     } else {
                         controller.dismiss(animated: true, completion: nil)
                     }
+                    self.isNeedReScanWhenAppear = false
                     QRCodeScanKit.sharedInstance.delegate?.detecorQRCodeSuccess(QRCodeScanKit.sharedInstance, from: self, codeString: message)
                 } else {
                     QRCodeScanTool.shared.stopActivity()
@@ -232,6 +244,7 @@ extension QRCodeScanViewController: RSKImageCropViewControllerDelegate {
                     } else {
                         controller.dismiss(animated: true, completion: nil)
                     }
+                    self.isNeedReScanWhenAppear = false
                     QRCodeScanKit.sharedInstance.delegate?.detecorQRCodeFailed(QRCodeScanKit.sharedInstance, from: self)
                 }
             }

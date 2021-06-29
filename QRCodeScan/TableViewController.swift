@@ -26,6 +26,10 @@ class TableViewController: UITableViewController {
 }
 
 extension TableViewController: QRCodelcanKitDelegate {
+    func qrCodeScanKitGetLocalizeValue(for value: String) -> String? {
+        return nil
+    }
+    
     
     func scanStyleCustomConfigation(_ qrcodeScanKit: QRCodeScanKit, from viewController: UIViewController) {
 //        QRCodeScanKit.sharedInstance.flashTips = "flashTips"
@@ -46,7 +50,7 @@ extension TableViewController: QRCodelcanKitDelegate {
             qrcodeScanKit.startScanning()
             return
         }
-        dealwith(code: code, scanKit: qrcodeScanKit, from: viewController, failureMessage: "不是球友圈二维码")
+        dealwith(code: code, scanKit: qrcodeScanKit, from: viewController, failureMessage: "不是合法的二维码")
     }
     
     func scanQRCodeFailed(_ qrcodeScanKit: QRCodeScanKit, from viewController: UIViewController, error: QRCodeScanError) {
@@ -54,7 +58,7 @@ extension TableViewController: QRCodelcanKitDelegate {
     }
     
     func detecorQRCodeSuccess(_ qrcodeScanKit: QRCodeScanKit, from viewController: UIViewController, codeString: String) {
-        dealwith(code: codeString, scanKit: qrcodeScanKit, from: viewController, failureMessage: "未识别，请选择球友圈二维码类型的图片")
+        dealwith(code: codeString, scanKit: qrcodeScanKit, from: viewController, failureMessage: "未识别，请选择合法的二维码类型的图片")
     }
     
     func detecorQRCodeFailed(_ qrcodeScanKit: QRCodeScanKit, from viewController: UIViewController) {
@@ -66,28 +70,39 @@ extension TableViewController: QRCodelcanKitDelegate {
 private extension TableViewController {
     func dealwith(code: String, scanKit: QRCodeScanKit, from viewController: UIViewController, failureMessage: String?) {
         /// 解析字符串
-        guard let url = URL(string: code) else {
-            scanKit.showFailureMask(text: failureMessage)
-            return
-        }
-        guard let components = url.query?.components(separatedBy: "&"), components.count > 0 else {
-            scanKit.showFailureMask(text: failureMessage)
-            return
-        }
-        var dict = [String : String]()
-        for component in components {
-            let arr = component.components(separatedBy: "=")
-            if arr.count == 2 {
-                dict[arr[0]] = arr[1]
-            }
-        }
-        guard let channel = dict["channel"],
-            channel == "ball_friends",
-            let idString = dict["groupID"],
-            let id = Int(idString) else {
-                scanKit.showFailureMask(text: failureMessage)
+        /// 解析字符串
+        if let url = URL(string: code), url.relativePath.contains("m/recharge") {
+            guard let query = url.query, let code = query.components(separatedBy: "=").last else {
                 return
+            }
+            let cardVc = TestViewController()
+            cardVc.title = "recharge"
+            cardVc.view.backgroundColor = .white
+            viewController.navigationController?.pushViewController(cardVc, animated: true)
+            print(code)
+        } else if let url = URL(string: code), url.relativePath.contains("m/download") {
+            guard let query = url.query, let skuCode = query.components(separatedBy: "=").last else {
+                return
+            }
+            print(skuCode)
+            let cardVc = TestViewController()
+            cardVc.view.backgroundColor = .white
+            cardVc.title = "download"
+            viewController.navigationController?.pushViewController(cardVc, animated: true)
+        } else if code.hasPrefix("/m/coupon") {
+            let webVC = TestViewController()
+            webVC.title = "coupon"
+            webVC.view.backgroundColor = .white
+            viewController.navigationController?.pushViewController(webVC, animated: true)
+        } else {
+            scanKit.showFailureMask(text: failureMessage)
         }
-        print(id)
+    }
+}
+
+class TestViewController: UIViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
     }
 }

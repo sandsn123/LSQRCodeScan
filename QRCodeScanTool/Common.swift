@@ -30,8 +30,15 @@ public func imageNamed(_ name:String)-> UIImage{
 }
 
 public extension String {
-  func s_localize(fallback: String) -> String {
-    let string = NSLocalizedString(self, comment: "")
-    return string == self ? fallback : string
-  }
+    func s_localize(fallback: String) -> String {
+        guard let value = QRCodeScanKit.sharedInstance.delegate?.qrCodeScanKitGetLocalizeValue() else {
+            return getLocalizeString(fallback: fallback)
+        }
+        return value
+    }
+    
+    private func getLocalizeString(fallback: String) -> String {
+        let string = NSLocalizedString(self, comment: "")
+        return string == self ? fallback : string
+    }
 }

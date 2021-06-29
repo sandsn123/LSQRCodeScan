@@ -41,9 +41,6 @@ public protocol QRCodelcanKitDelegate: class {
 
 public extension QRCodelcanKitDelegate {
     func scanQRCodeFailed(error: QRCodeScanError){}
-    func qrCodeScanKitGetLocalizeValue() -> String? {
-        return nil
-    }
 }
 
 public class QRCodeScanKit {

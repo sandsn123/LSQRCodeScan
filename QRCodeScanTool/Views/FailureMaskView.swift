@@ -21,6 +21,7 @@ class FailureMaskView: UIView {
         lab.text = "QRCode.Tap.ReScan.Tip".s_localize(fallback: "轻触屏幕继续扫描")
         lab.textColor = UIColor.gray
         lab.font = UIFont.systemFont(ofSize: 12)
+        lab.numberOfLines = 0
         lab.textAlignment = .center
         return lab
     }()
@@ -38,7 +39,7 @@ class FailureMaskView: UIView {
         addSubview(tapLabel)
         addSubview(messageLabel)
         
-        tapLabel.width = 100
+        tapLabel.width = frame.size.width - 20
         tapLabel.height = 24
         tapLabel.centerX = self.centerX
         tapLabel.y = self.centerY - tapLabel.height

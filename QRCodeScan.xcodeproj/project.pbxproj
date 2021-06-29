@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		04937FAE2689B43200CB5411 /* RSKImageCropper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04937FA92689B3E700CB5411 /* RSKImageCropper.xcframework */; };
 		04937FB72689B57600CB5411 /* QRCodeScanTool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3222E6732265650A005A447D /* QRCodeScanTool.framework */; };
 		04937FB82689B57600CB5411 /* QRCodeScanTool.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3222E6732265650A005A447D /* QRCodeScanTool.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04A11BC52689B5E500D71E66 /* RSKImageCropper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04937FA92689B3E700CB5411 /* RSKImageCropper.xcframework */; };
 		04A11BC62689B5E500D71E66 /* RSKImageCropper.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 04937FA92689B3E700CB5411 /* RSKImageCropper.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		04FB27ED268AC1F00005DDE6 /* RSKImageCropper.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04937FA92689B3E700CB5411 /* RSKImageCropper.xcframework */; };
 		32133858225B38AC001C0C4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32133857225B38AC001C0C4E /* AppDelegate.swift */; };
 		3213385D225B38AC001C0C4E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3213385B225B38AC001C0C4E /* Main.storyboard */; };
 		3213385F225B38B0001C0C4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3213385E225B38B0001C0C4E /* Assets.xcassets */; };
@@ -106,7 +106,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04937FAE2689B43200CB5411 /* RSKImageCropper.xcframework in Frameworks */,
+				04FB27ED268AC1F00005DDE6 /* RSKImageCropper.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

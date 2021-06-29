@@ -36,7 +36,7 @@ public protocol QRCodelcanKitDelegate: class {
     /// 获取国际化语言
     ///
     /// - Result: 若返回nil，则按照默认规则
-    func qrCodeScanKitGetLocalizeValue() -> String?
+    func qrCodeScanKitGetLocalizeValue(for value: String) -> String?
 }
 
 public extension QRCodelcanKitDelegate {
